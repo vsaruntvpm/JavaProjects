@@ -1,5 +1,8 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -8,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.FontUIResource;
 
-public class Basic_Calculator {
+public class Basic_Calculator implements ActionListener{
 	
 //Global declaration;
 	JFrame frame;
@@ -18,27 +21,36 @@ public class Basic_Calculator {
 	equalbutton, modbutton, pombutton, powerbutton, sqrtbutton, divxbutton, decimalbutton, cbutton,
 	cebutton, backbutton, exitbutton, maxbutton, minbutton, memoryclear, memoryrecall,memoryadd,
 	memorysub, memorystore, memory;
+	Boolean operator=false;
+	String value, symbol, newvalue, lastoperator, nextinput, inputvalue;
+	int choice = 0;
+	float oldvaluef, newvaluef, result;
+	
+    Stack<String> stack_1 = new Stack<>();
+    Stack<String> stack_2 = new Stack<>();
+    Stack<String> stack_3 = new Stack<>();
+    Stack<String> stack_4 = new Stack<>();
 	
 	Basic_Calculator(){
 		
 	//Base frame creation	
-		JFrame frame=new JFrame();
+		frame=new JFrame();
 		frame.setBounds(500, 100, 505, 550);
 		frame.setLayout(null);
 		frame.setUndecorated(true);
 		frame.setOpacity(0.90f);
 		
 	//Main display creation
-		JLabel maindisp=new JLabel("0", SwingConstants.RIGHT);
+		maindisp=new JLabel(" ", SwingConstants.RIGHT);
 		maindisp.setBounds(0, 110, 505, 70);
 		maindisp.setFont(new FontUIResource("segoe UI", Font.BOLD, 40));
 		maindisp.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 		frame.add(maindisp);
 		
 	//Sub display creation
-        JLabel subdisp=new JLabel("0", SwingConstants.RIGHT);
+        subdisp=new JLabel(" ", SwingConstants.RIGHT);
         subdisp.setBounds(300, 40, 200, 70);
-        subdisp.setFont(new FontUIResource("segoe UI", Font.PLAIN, 25));
+        subdisp.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
         frame.add(subdisp);
         
     //Title label
@@ -77,7 +89,6 @@ public class Basic_Calculator {
         memorysub.setBackground(new Color(200, 211, 224));
         memorystore.setBackground(new Color(200, 211, 224));
         memory.setBackground(new Color(200, 211, 224));
-
         
         memoryclear.setOpaque(false);
         memoryrecall.setOpaque(false);
@@ -92,7 +103,6 @@ public class Basic_Calculator {
         memorysub.setBorderPainted(false);
         memorystore.setBorderPainted(false);
         memory.setBorderPainted(false);
-
         
         frame.add(memoryclear);
         frame.add(memoryrecall);
@@ -101,7 +111,6 @@ public class Basic_Calculator {
         frame.add(memorystore);
         frame.add(memory);
 
-        
     //Button creation
 		onebutton=new JButton("1");
 		twobutton=new JButton("2");
@@ -159,8 +168,6 @@ public class Basic_Calculator {
         maxbutton.setBounds(405, 0, 50, 30);
         minbutton.setBounds(355, 0, 50, 30);
 
-
-
         modbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
         sqrtbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
         powerbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
@@ -188,9 +195,6 @@ public class Basic_Calculator {
         exitbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
         maxbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
         minbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
-
-
-
 
         modbutton.setBackground(new Color(200, 211, 224));
         sqrtbutton.setBackground(new Color(200, 211, 224));
@@ -220,9 +224,6 @@ public class Basic_Calculator {
         maxbutton.setBackground(new Color(225, 226, 227));
         minbutton.setBackground(new Color(225, 226, 227));
 
-
-
-
         modbutton.setBorderPainted(false);
         sqrtbutton.setBorderPainted(false);
         powerbutton.setBorderPainted(false);
@@ -251,12 +252,9 @@ public class Basic_Calculator {
         maxbutton.setBorderPainted(false);
         minbutton.setBorderPainted(false);
 
-        
         minbutton.setOpaque(false);
         maxbutton.setOpaque(false);
         exitbutton.setOpaque(false);
-
-        
         
         frame.add(modbutton);
         frame.add(sqrtbutton);
@@ -285,12 +283,335 @@ public class Basic_Calculator {
         frame.add(exitbutton);
         frame.add(maxbutton);
         frame.add(minbutton);
-
-
-
+        
+    //Action Listener 
+        modbutton.addActionListener(this);
+        sqrtbutton.addActionListener(this);
+        powerbutton.addActionListener(this);
+        divxbutton.addActionListener(this);
+        cebutton.addActionListener(this);
+        cbutton.addActionListener(this);
+        backbutton.addActionListener(this);
+        divbutton.addActionListener(this);
+        sevenbutton.addActionListener(this);
+        eightbutton.addActionListener(this);
+        ninebutton.addActionListener(this);
+        multiplybutton.addActionListener(this);
+        fourbutton.addActionListener(this);
+        fivebutton.addActionListener(this);
+        sixbutton.addActionListener(this);
+        subtractbutton.addActionListener(this);
+        onebutton.addActionListener(this);
+        twobutton.addActionListener(this);
+        threebutton.addActionListener(this);
+        addbutton.addActionListener(this);
+        pombutton.addActionListener(this);
+        zerobutton.addActionListener(this);
+        decimalbutton.addActionListener(this);
+        equalbutton.addActionListener(this);
+        exitbutton.addActionListener(this);
+        maxbutton.addActionListener(this);
+        minbutton.addActionListener(this);
+        memoryclear.addActionListener(this);
+        memoryrecall.addActionListener(this);
+        memoryadd.addActionListener(this);
+        memorysub.addActionListener(this);
+        memorystore.addActionListener(this);
+        memory.addActionListener(this);
 
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 	}
+
+	//Accept input from buttons
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		if (e.getSource()==onebutton) {
+            if (operator) {
+                maindisp.setText("1");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"1");
+            }
+        }
+		else if (e.getSource()==twobutton) {
+            if (operator) {
+                maindisp.setText("2");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"2");
+            }
+        }
+		else if (e.getSource()==threebutton) {
+            if (operator) {
+                maindisp.setText("3");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"3");
+            }
+        }
+		else if (e.getSource()==fourbutton) {
+            if (operator) {
+                maindisp.setText("4");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"4");
+            }
+        }
+		else if (e.getSource()==fivebutton) {
+            if (operator) {
+                maindisp.setText("5");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"5");
+            }
+        }
+		else if (e.getSource()==sixbutton) {
+            if (operator) {
+                maindisp.setText("6");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"6");
+            }
+        }
+		else if (e.getSource()==sevenbutton) {
+            if (operator) {
+                maindisp.setText("7");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"7");
+            }
+        }
+		else if (e.getSource()==eightbutton) {
+            if (operator) {
+                maindisp.setText("8");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"8");
+            }
+        }
+		else if (e.getSource()==ninebutton) {
+            if (operator) {
+                maindisp.setText("9");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"9");
+            }
+        }
+		else if (e.getSource()==zerobutton) {
+            if (operator) {
+                maindisp.setText("0");
+                operator = false;
+            }else{
+                maindisp.setText(maindisp.getText()+"0");
+            }
+        }
+		else if (e.getSource()==cebutton) {
+            maindisp.setText("");
+        }
+		else if (e.getSource()==cbutton) {
+            subdisp.setText("");
+            oldvaluef = newvaluef = result = 0;
+        	value = symbol = newvalue = "";
+        	  stack_1.clear();
+              stack_2.clear();
+              stack_3.clear();
+              stack_4.clear();
+            maindisp.setText("");
+            lastoperator = "";
+        }
+		else if (e.getSource()==addbutton) {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"+");
+            value = maindisp.getText();
+            maindisp.setText(" ");
+            symbol = "+";
+            getValues(value, symbol);
+        }
+		else if (e.getSource()==subtractbutton) {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"-");
+            value = maindisp.getText();
+            maindisp.setText(" ");
+            symbol = "-";
+            getValues(value, symbol);
+        }
+		else if (e.getSource()==multiplybutton) {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"x");
+            value = maindisp.getText();
+            maindisp.setText(" ");
+            symbol = "x";
+            getValues(value, symbol);
+        }
+		else if (e.getSource()==divbutton) {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"\u00F7");
+            value = maindisp.getText();
+            maindisp.setText(" ");
+            symbol = "/";
+            getValues(value, symbol);
+        }
+		else if (e.getSource()==backbutton) {
+        	if (maindisp.getText()=="") {
+                subdisp.setText(subdisp.getText().substring(0, subdisp.getText().length()-1));
+			}else {
+	            maindisp.setText(maindisp.getText().substring(0, maindisp.getText().length()-1));
+			}
+        }
+		else if (e.getSource()==decimalbutton) {
+            if (operator) {
+                maindisp.setText(".");
+            }else{
+                maindisp.setText(maindisp.getText()+".");
+            }
+        }
+		else if (e.getSource()==pombutton) {
+                maindisp.setText("-"+maindisp.getText());
+        }
+		else if (e.getSource()==modbutton) {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"%");
+            oldvaluef = Float.parseFloat(maindisp.getText());
+            choice = 1;
+        }
+		else if (e.getSource()==sqrtbutton) {
+            operator = true;
+            subdisp.setText("\u221A"+maindisp.getText());
+            double x = Double.parseDouble(maindisp.getText());
+            double result = Math.sqrt(x);
+            maindisp.setText(result+"");
+            subdisp.setText(" ");
+        }
+		else if (e.getSource()==powerbutton) {
+            operator = true;
+            subdisp.setText(maindisp.getText()+"\u00B2");
+            double y = Double.parseDouble(maindisp.getText());
+            double result = Math.pow(y, 2);
+            maindisp.setText(result+"");
+            subdisp.setText(" ");
+        }
+		else if (e.getSource()==divxbutton) {
+            operator = true;
+            subdisp.setText("1"+"\u00F7"+maindisp.getText());
+            float oldvalue = Float.parseFloat(maindisp.getText());
+            Float result = 1/oldvalue;
+            maindisp.setText(result+"");
+            subdisp.setText(" ");
+        }
+		else if (e.getSource()==exitbutton) {
+            System.exit(0);
+        }
+		else if (e.getSource()==minbutton) {
+            frame.setState(JFrame.ICONIFIED);
+        }
+        else if (e.getSource() == equalbutton) {
+            if (choice == 1) {
+                newvalue = maindisp.getText();
+                subdisp.setText(subdisp.getText()+newvalue);
+                newvaluef = Float.parseFloat(newvalue);
+                result = oldvaluef % newvaluef;
+                maindisp.setText(result+"");
+            }
+            value = maindisp.getText();
+            symbol = "=";
+            getValues(value, symbol);
+
+            while (!stack_1.empty()) {
+                stack_2.push(stack_1.pop());
+                lastoperator = "=";
+            }
+
+            while (!stack_2.empty()){
+                nextinput = stack_2.pop();
+                inputvalue = stack_2.pop();
+                buttonHandler(inputvalue, nextinput);
+            }
+        }
+	}
+	
+	//store initial values to stack 1
+	private void getValues(String value, String symbol) {
+        stack_1.push(value);
+        stack_1.push(symbol);
+	}
+	
+	//method to find result
+    private void buttonHandler(String buttonValue, String nexInput) {  
+        
+        if (lastoperator.equals("=")) {
+            maindisp.setText("");
+            subdisp.setText(" ");
+        }
+        
+        if (buttonValue.length()>0) {
+            try {
+                if (!stack_3.empty()) {
+                    if (stack_3.peek().equals("x")) {
+                    	stack_3.pop();
+                        float num1 = Float.parseFloat(stack_3.pop());
+                        float num2 = Float.parseFloat(nexInput);
+                        float result = num1 * num2;
+                        nexInput = Float.toString(result);
+                    } else if (stack_3.peek().equals("/")) {
+                    	stack_3.pop();
+                        float num1 = Float.parseFloat(stack_3.pop());
+                        float num2 = Float.parseFloat(nexInput);
+                        if (num1 != 0) {
+                        	float result = num1 / num2;
+                            nexInput = Float.toString(result); 
+						}
+                        else {
+                        	maindisp.setText("Zero division Error");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                System.out.println("something wrong in part 1");
+            }
+            if (!buttonValue.equals("=")) {
+                stack_3.push(nexInput);
+                stack_3.push(buttonValue);
+            }
+            else {
+                if(!stack_3.empty()) {
+                    try {
+                        stack_3.push(nexInput);
+                        while (!stack_3.empty()) {
+                            stack_4.push(stack_3.pop());
+                        }
+                        while (!stack_4.empty()) {
+                            String firstNumber = stack_4.pop();
+                            if (stack_4.peek().equals("+")) {
+                                stack_4.pop();
+                                float num1 = Float.parseFloat(firstNumber);
+                                float num2 = Float.parseFloat(stack_4.pop());
+                                float result = num1 + num2;
+                                nexInput = Float.toString(result);
+                            }else if (stack_4.peek().equals("-")) {
+                                stack_4.pop();
+                                float num1 = Float.parseFloat(firstNumber);
+                                float num2 = Float.parseFloat(stack_4.pop());
+                                float result = num1 - num2;
+                                nexInput = Float.toString(result);
+                            }if (!stack_4.empty()) {
+                                stack_4.push(nexInput);
+                            } else {
+                                maindisp.setText(nexInput);
+                            }
+                        }
+                    }catch (Exception ex) {
+                    System.out.println("something wrong in part 2");
+                }
+            }
+                else {
+                    maindisp.setText(nexInput);
+                }
+        }
+        }
+    }
+	
 }
