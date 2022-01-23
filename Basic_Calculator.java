@@ -1,9 +1,12 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -29,6 +32,8 @@ public class Basic_Calculator implements ActionListener{
 	String value, symbol, newvalue, lastoperator, nextinput, inputvalue;
 	int choice = 0;
 	float oldvaluef, newvaluef, result;
+	//---------------------------------------------------------------------------------------//
+	Point mouseDownScreenCoords, mouseDownCompCoords, currCoords;
 	//---------------------------------------------------------------------------------------//
     Stack<String> stack_1 = new Stack<>();
     Stack<String> stack_2 = new Stack<>();
@@ -644,6 +649,57 @@ public class Basic_Calculator implements ActionListener{
 	            }
 		});
 		
+
+        mouseDownCompCoords=null;
+        mouseDownScreenCoords=null;
+        frame.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				   mouseDownCompCoords=null;
+		            mouseDownScreenCoords=null;				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				mouseDownScreenCoords=e.getLocationOnScreen();
+	            mouseDownCompCoords=e.getPoint();				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        frame.addMouseMotionListener(new MouseMotionListener() {
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+                currCoords = e.getLocationOnScreen();
+                frame.setLocation(mouseDownScreenCoords.x + (currCoords.x - mouseDownScreenCoords.x) - mouseDownCompCoords.x,
+                mouseDownScreenCoords.y + (currCoords.y - mouseDownScreenCoords.y) - mouseDownCompCoords.y);				
+			}
+		});
 	}
 
 	//Accept input from buttons
@@ -796,7 +852,12 @@ public class Basic_Calculator implements ActionListener{
             }
         }
 		else if (e.getSource()==pombutton) {
-                maindisp.setText("-"+maindisp.getText());
+            if (subdisp.getText()=="") {
+				value = "0";
+				symbol = "-";
+				getValues(value, symbol);
+			}
+            subdisp.setText("0"+"-");
         }
 		else if (e.getSource()==modbutton) {
             operator = true;
@@ -868,6 +929,7 @@ public class Basic_Calculator implements ActionListener{
 	//method to find result
     private void buttonHandler(String buttonValue, String nexInput) {  
         
+    	int choice = 0;
         if (lastoperator.equals("=")) {
             maindisp.setText("");
             subdisp.setText(" ");
@@ -886,18 +948,19 @@ public class Basic_Calculator implements ActionListener{
                     	stack_3.pop();
                         float num1 = Float.parseFloat(stack_3.pop());
                         float num2 = Float.parseFloat(nexInput);
-                        if (num1 != 0) {
+                        if (num2 != 0) {
                         	float result = num1 / num2;
                             nexInput = Float.toString(result); 
 						}
                         else {
-                        	maindisp.setText("Zero division Error");
+                        	 choice = 1; 
                         }
                     }
                 }
             }
             catch (Exception ex) {
-                System.out.println("something wrong in part 1");
+                //System.out.println("something wrong in part 1");
+            	maindisp.setText("Something went wrong");
             }
             if (!buttonValue.equals("=")) {
                 stack_3.push(nexInput);
@@ -931,10 +994,13 @@ public class Basic_Calculator implements ActionListener{
                             }
                         }
                     }catch (Exception ex) {
-                    System.out.println("something wrong in part 2");
+                    //System.out.println("something wrong in part 2");
+                    maindisp.setText("Something went wrong");
                 }
             }
-                else {
+                else if(choice == 1) {
+                	maindisp.setText("Cannot divided by zero");
+                }else {
                     maindisp.setText(nexInput);
                 }
         }
