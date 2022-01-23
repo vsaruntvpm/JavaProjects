@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -16,16 +18,18 @@ public class Basic_Calculator implements ActionListener{
 //Global declaration;
 	JFrame frame;
 	JLabel maindisp, subdisp, titlelabel;
+	//----------------------------------------------------------------------------------------//
 	JButton onebutton, twobutton, threebutton, fourbutton, fivebutton, sixbutton, sevenbutton,
 	eightbutton, ninebutton, zerobutton, addbutton, subtractbutton, multiplybutton, divbutton,
 	equalbutton, modbutton, pombutton, powerbutton, sqrtbutton, divxbutton, decimalbutton, cbutton,
 	cebutton, backbutton, exitbutton, maxbutton, minbutton, memoryclear, memoryrecall,memoryadd,
 	memorysub, memorystore, memory;
+	//---------------------------------------------------------------------------------------//
 	Boolean operator=false;
 	String value, symbol, newvalue, lastoperator, nextinput, inputvalue;
 	int choice = 0;
 	float oldvaluef, newvaluef, result;
-	
+	//---------------------------------------------------------------------------------------//
     Stack<String> stack_1 = new Stack<>();
     Stack<String> stack_2 = new Stack<>();
     Stack<String> stack_3 = new Stack<>();
@@ -196,30 +200,30 @@ public class Basic_Calculator implements ActionListener{
         maxbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
         minbutton.setFont(new FontUIResource("segoe UI", Font.PLAIN, 20));
 
-        modbutton.setBackground(new Color(200, 211, 224));
-        sqrtbutton.setBackground(new Color(200, 211, 224));
-        powerbutton.setBackground(new Color(200, 211, 224));
-        divxbutton.setBackground(new Color(200, 211, 224));
-        cebutton.setBackground(new Color(200, 211, 224));
-        cbutton.setBackground(new Color(200, 211, 224));
-        backbutton.setBackground(new Color(200, 211, 224));
-        divbutton.setBackground(new Color(200, 211, 224));
+        modbutton.setBackground(new Color(219, 217, 217));
+        sqrtbutton.setBackground(new Color(219, 217, 217));
+        powerbutton.setBackground(new Color(219, 217, 217));
+        divxbutton.setBackground(new Color(219, 217, 217));
+        cebutton.setBackground(new Color(219, 217, 217));
+        cbutton.setBackground(new Color(219, 217, 217));
+        backbutton.setBackground(new Color(219, 217, 217));
+        divbutton.setBackground(new Color(219, 217, 217));
         sevenbutton.setBackground(new Color(255, 255, 255));
         eightbutton.setBackground(new Color(255, 255, 255));
         ninebutton.setBackground(new Color(255, 255, 255));
-        multiplybutton.setBackground(new Color(200, 211, 224));
+        multiplybutton.setBackground(new Color(219, 217, 217));
         fourbutton.setBackground(new Color(255, 255, 255));
         fivebutton.setBackground(new Color(255, 255, 255));
         sixbutton.setBackground(new Color(255, 255, 255));
-        subtractbutton.setBackground(new Color(200, 211, 224));
+        subtractbutton.setBackground(new Color(219, 217, 217));
         onebutton.setBackground(new Color(255, 255, 255));
         twobutton.setBackground(new Color(255, 255, 255));
         threebutton.setBackground(new Color(255, 255, 255));
-        addbutton.setBackground(new Color(200, 211, 224));
-        pombutton.setBackground(new Color(255, 255, 255));
+        addbutton.setBackground(new Color(219, 217, 217));
+        pombutton.setBackground(new Color(219, 217, 217));
         zerobutton.setBackground(new Color(255, 255, 255));
         decimalbutton.setBackground(new Color(255, 255, 255));
-        equalbutton.setBackground(new Color(200, 211, 224));
+        equalbutton.setBackground(new Color(219, 217, 217));
         exitbutton.setBackground(new Color(225, 226, 227));
         maxbutton.setBackground(new Color(225, 226, 227));
         minbutton.setBackground(new Color(225, 226, 227));
@@ -321,12 +325,334 @@ public class Basic_Calculator implements ActionListener{
 
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	
+	//Changing button color on mouse hover
+		exitbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!exitbutton.isOpaque()) {
+		                exitbutton.setOpaque(true);
+				}
+	                exitbutton.setBackground(Color.RED);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                exitbutton.setOpaque(false);
+	            }
+		});
+		minbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!minbutton.isOpaque()) {
+					 minbutton.setOpaque(true);
+				}
+				 minbutton.setBackground(new Color(215, 218, 222));
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	minbutton.setOpaque(false);
+	            }
+		});
+		maxbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!maxbutton.isOpaque()) {
+					 maxbutton.setOpaque(true);
+				}
+				 maxbutton.setBackground(new Color(215, 228, 245));
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	maxbutton.setOpaque(false);
+	            }
+		});
+		
+		pombutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 pombutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                pombutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		zerobutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 zerobutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	zerobutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		decimalbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 decimalbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	decimalbutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		equalbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 equalbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                equalbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		
+		onebutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 onebutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	onebutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		twobutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 twobutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	twobutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		threebutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 threebutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	threebutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		addbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 addbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                addbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		
+		fourbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 fourbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                fourbutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		fivebutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 fivebutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                fivebutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		sixbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 sixbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                sixbutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		subtractbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 subtractbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	                subtractbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+
+		sevenbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 sevenbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	sevenbutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		eightbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 eightbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	eightbutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		ninebutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 ninebutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	ninebutton.setBackground(new Color(255, 255, 255));
+	            }
+		});
+		multiplybutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 multiplybutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	multiplybutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		
+		cebutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 cebutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	cebutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		cbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 cbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	cbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		backbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 backbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	backbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		divbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 divbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	divbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		
+		modbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 modbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	modbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		sqrtbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 sqrtbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	sqrtbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		powerbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 powerbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	powerbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		divxbutton.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 divxbutton.setBackground(Color.LIGHT_GRAY);
+				}
+	            public void mouseExited(MouseEvent evt) {
+	            	divxbutton.setBackground(new Color(219, 217, 217));
+	            }
+		});
+		
+		memoryclear.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!memoryclear.isBorderPainted()) {
+		                memoryclear.setBorderPainted(true);
+		                memoryclear.setOpaque(true);
+				}
+					memoryclear.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+					memoryclear.setBackground(Color.LIGHT_GRAY);
+			 }
+	            public void mouseExited(MouseEvent evt) {
+	                memoryclear.setBorderPainted(false);
+	                memoryclear.setOpaque(false);
+	            }
+		});
+		memoryrecall.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!memoryrecall.isBorderPainted()) {
+					 memoryrecall.setBorderPainted(true);
+					 memoryrecall.setOpaque(true);
+				}
+				 memoryrecall.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+				 memoryrecall.setBackground(Color.LIGHT_GRAY);
+			 }
+	            public void mouseExited(MouseEvent evt) {
+	            	memoryrecall.setBorderPainted(false);
+	            	memoryrecall.setOpaque(false);
+	            }
+		});
+		memoryadd.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!memoryadd.isBorderPainted()) {
+					 memoryadd.setBorderPainted(true);
+					 memoryadd.setOpaque(true);
+				}
+				 memoryadd.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+				 memoryadd.setBackground(Color.LIGHT_GRAY);
+			 }
+	            public void mouseExited(MouseEvent evt) {
+	            	memoryadd.setBorderPainted(false);
+	            	memoryadd.setOpaque(false);
+	            }
+		});
+		memorysub.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!memorysub.isBorderPainted()) {
+					 memorysub.setBorderPainted(true);
+					 memorysub.setOpaque(true);
+				}
+				 memorysub.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+				 memorysub.setBackground(Color.LIGHT_GRAY);
+			 }
+	            public void mouseExited(MouseEvent evt) {
+	            	memorysub.setBorderPainted(false);
+	            	memorysub.setOpaque(false);
+	            }
+		});
+		memorystore.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!memorystore.isBorderPainted()) {
+					 memorystore.setBorderPainted(true);
+					 memorystore.setOpaque(true);
+				}
+				 memorystore.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+				 memorystore.setBackground(Color.LIGHT_GRAY);
+			 }
+	            public void mouseExited(MouseEvent evt) {
+	            	memorystore.setBorderPainted(false);
+	            	memorystore.setOpaque(false);
+	            }
+		});
+		memory.addMouseListener(new MouseAdapter() {
+			 public void mouseEntered(MouseEvent evt) {
+				 if (!memory.isBorderPainted()) {
+					 memory.setBorderPainted(true);
+					 memory.setOpaque(true);
+				}
+				 memory.setBorder(BorderFactory.createLineBorder(Color.WHITE,2));
+				 memory.setBackground(Color.LIGHT_GRAY);
+			 }
+	            public void mouseExited(MouseEvent evt) {
+	            	memory.setBorderPainted(false);
+	            	memory.setOpaque(false);
+	            }
+		});
 		
 	}
 
 	//Accept input from buttons
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getSource() != null) {
+	        maindisp.setBorder(null);
+		}
 
 		if (e.getSource()==onebutton) {
             if (operator) {
@@ -420,6 +746,7 @@ public class Basic_Calculator implements ActionListener{
               stack_3.clear();
               stack_4.clear();
             maindisp.setText("");
+    		maindisp.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
             lastoperator = "";
         }
 		else if (e.getSource()==addbutton) {
@@ -531,7 +858,7 @@ public class Basic_Calculator implements ActionListener{
             }
         }
 	}
-	
+
 	//store initial values to stack 1
 	private void getValues(String value, String symbol) {
         stack_1.push(value);
@@ -613,5 +940,4 @@ public class Basic_Calculator implements ActionListener{
         }
         }
     }
-	
 }
