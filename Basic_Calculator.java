@@ -3,16 +3,24 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Stack;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.FontUIResource;
 
@@ -29,7 +37,7 @@ public class Basic_Calculator implements ActionListener{
 	memorysub, memorystore, memory;
 	//---------------------------------------------------------------------------------------//
 	Boolean operator=false;
-	String value, symbol, newvalue, lastoperator, nextinput, inputvalue;
+	String value, symbol, newvalue, lastoperator, nextinput, inputvalue, ACTION_KEY = "The Action";
 	int choice = 0;
 	float oldvaluef, newvaluef, result;
 	//---------------------------------------------------------------------------------------//
@@ -39,7 +47,8 @@ public class Basic_Calculator implements ActionListener{
     Stack<String> stack_2 = new Stack<>();
     Stack<String> stack_3 = new Stack<>();
     Stack<String> stack_4 = new Stack<>();
-	
+	//---------------------------------------------------------------------------------------//
+
 	Basic_Calculator(){
 		
 	//Base frame creation	
@@ -649,7 +658,7 @@ public class Basic_Calculator implements ActionListener{
 	            }
 		});
 		
-
+    //To track mouse moves and mouse drags, use the MouseMotionListener
         mouseDownCompCoords=null;
         mouseDownScreenCoords=null;
         frame.addMouseListener(new MouseListener() {
@@ -684,6 +693,7 @@ public class Basic_Calculator implements ActionListener{
 				
 			}
 		});
+        
         frame.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
@@ -700,8 +710,456 @@ public class Basic_Calculator implements ActionListener{
                 mouseDownScreenCoords.y + (currCoords.y - mouseDownScreenCoords.y) - mouseDownCompCoords.y);				
 			}
 		});
-	}
+        
+    //Key binding
+        ActionMap one_1 = onebutton.getActionMap();
+        ActionMap two_2 = twobutton.getActionMap();
+        ActionMap three_3 = threebutton.getActionMap();
+        ActionMap four_4 = fourbutton.getActionMap();
+        ActionMap five_5 = fivebutton.getActionMap();
+        ActionMap six_6 = sixbutton.getActionMap();
+        ActionMap seven_7 = sevenbutton.getActionMap();
+        ActionMap eight_8 = eightbutton.getActionMap();
+        ActionMap nine_9 = ninebutton.getActionMap();
+        ActionMap zero_0 = zerobutton.getActionMap();
+        ActionMap getmod = modbutton.getActionMap();
+        ActionMap getsqrt = sqrtbutton.getActionMap();
+        ActionMap getpower = powerbutton.getActionMap();
+        ActionMap getdivx = divxbutton.getActionMap();
+        ActionMap getclear = cbutton.getActionMap();
+        ActionMap getback = backbutton.getActionMap();
+        ActionMap getsub = subtractbutton.getActionMap();
+        ActionMap getadd = addbutton.getActionMap();
+        ActionMap getprod = multiplybutton.getActionMap();
+        ActionMap getdiv = divbutton.getActionMap();
+        ActionMap getres = equalbutton.getActionMap();
+        ActionMap getmin = pombutton.getActionMap();
+        ActionMap getdot = decimalbutton.getActionMap();
+        
+        one_1.put(ACTION_KEY, action);
+        two_2.put(ACTION_KEY, action);
+        three_3.put(ACTION_KEY, action);
+        four_4.put(ACTION_KEY, action);
+        five_5.put(ACTION_KEY, action);
+        six_6.put(ACTION_KEY, action);
+        seven_7.put(ACTION_KEY, action);
+        eight_8.put(ACTION_KEY, action);
+        nine_9.put(ACTION_KEY, action);
+        zero_0.put(ACTION_KEY, action);
+        getmod.put(ACTION_KEY, action);
+        getsqrt.put(ACTION_KEY, action);
+        getpower.put(ACTION_KEY, action);
+        getdivx.put(ACTION_KEY, action);
+        getclear.put(ACTION_KEY, action);
+        getback.put(ACTION_KEY, action);
+        getsub.put(ACTION_KEY, action);
+        getadd.put(ACTION_KEY, action);
+        getprod.put(ACTION_KEY, action);
+        getdiv.put(ACTION_KEY, action);
+        getres.put(ACTION_KEY, action);
+        getmin.put(ACTION_KEY, action);
+        getdot.put(ACTION_KEY, action);
 
+        KeyStroke onepressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1,0);
+        KeyStroke twopressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2,0);
+        KeyStroke threepressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3,0);
+        KeyStroke fourpressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4,0);
+        KeyStroke fivepressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD5,0);
+        KeyStroke sixpressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD6,0);
+        KeyStroke sevenpressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD7,0);
+        KeyStroke eightpressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD8,0);
+        KeyStroke ninepressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD9,0);
+        KeyStroke zeropressed = KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD0,0);
+        KeyStroke modpressed = KeyStroke.getKeyStroke(KeyEvent.VK_5, InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke sqrtpressed = KeyStroke.getKeyStroke(KeyEvent.VK_2, InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke powerpressed = KeyStroke.getKeyStroke(KeyEvent.VK_6, InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke divxpressed = KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.SHIFT_DOWN_MASK);
+        KeyStroke clearpressed = KeyStroke.getKeyStroke(KeyEvent.VK_C,0);
+        KeyStroke backpressed = KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE,0);
+        KeyStroke subpressed = KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT,0);
+        KeyStroke addpressed = KeyStroke.getKeyStroke(KeyEvent.VK_ADD,0);
+        KeyStroke mulpressed = KeyStroke.getKeyStroke(KeyEvent.VK_MULTIPLY,0);
+        KeyStroke divpressed = KeyStroke.getKeyStroke(KeyEvent.VK_DIVIDE,0);
+        KeyStroke equalpressed = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0);
+        KeyStroke dotpressed = KeyStroke.getKeyStroke(KeyEvent.VK_DECIMAL,0);
+        KeyStroke pompressed = KeyStroke.getKeyStroke(KeyEvent.VK_M, 0);
+        
+        InputMap one = onebutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap two = twobutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap three = threebutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap four = fourbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap five = fivebutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap six = sixbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap seven = sevenbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap eight = eightbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap nine = ninebutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap zero = zerobutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap mod = modbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap sqr = sqrtbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap power = powerbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap divx = divxbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap clear = cbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap backspace = backbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap sub = subtractbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap add = addbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap mul = multiplybutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap div = divbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap equal = equalbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap dot = decimalbutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        InputMap pom = pombutton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        
+        one.put(onepressed, ACTION_KEY);
+        two.put(twopressed, ACTION_KEY);
+        three.put(threepressed, ACTION_KEY);
+        four.put(fourpressed, ACTION_KEY);
+        five.put(fivepressed, ACTION_KEY);
+        six.put(sixpressed, ACTION_KEY);
+        seven.put(sevenpressed, ACTION_KEY);
+        eight.put(eightpressed, ACTION_KEY);
+        nine.put(ninepressed, ACTION_KEY);
+        zero.put(zeropressed, ACTION_KEY);
+        mod.put(modpressed, ACTION_KEY);
+        sqr.put(sqrtpressed, ACTION_KEY);
+        power.put(powerpressed, ACTION_KEY);
+        divx.put(divxpressed, ACTION_KEY);
+        clear.put(clearpressed, ACTION_KEY);
+        backspace.put(backpressed, ACTION_KEY);
+        sub.put(subpressed, ACTION_KEY);
+        add.put(addpressed, ACTION_KEY);
+        mul.put(mulpressed, ACTION_KEY);
+        div.put(divpressed, ACTION_KEY);
+        equal.put(equalpressed, ACTION_KEY);
+        dot.put(dotpressed, ACTION_KEY);
+        pom.put(pompressed, ACTION_KEY);
+
+        onebutton.setActionMap(one_1);
+        twobutton.setActionMap(two_2);
+        threebutton.setActionMap(three_3);
+        fourbutton.setActionMap(four_4);
+        fivebutton.setActionMap(five_5);
+        sixbutton.setActionMap(six_6);
+        sevenbutton.setActionMap(seven_7);
+        eightbutton.setActionMap(eight_8);
+        ninebutton.setActionMap(nine_9);
+        zerobutton.setActionMap(zero_0);
+        modbutton.setActionMap(getmod);
+        sqrtbutton.setActionMap(getsqrt);
+        powerbutton.setActionMap(getpower);
+        divxbutton.setActionMap(getdivx);
+        cbutton.setActionMap(getclear);
+        cbutton.setActionMap(getback);
+        subtractbutton.setActionMap(getsub);
+        addbutton.setActionMap(getadd);
+        multiplybutton.setActionMap(getprod);
+        divbutton.setActionMap(getdiv);
+        equalbutton.setActionMap(getres);
+        decimalbutton.setActionMap(getdot);
+        pombutton.setActionMap(getmin);
+
+	}
+	
+	Action action = new AbstractAction() {
+		
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JButton source = (JButton) e.getSource();
+			if (source != null) {
+		        maindisp.setBorder(null);
+			}
+			
+			if (source.equals(ninebutton)) {
+                keyPressed("9");
+            }
+			else if (source.equals(eightbutton)) {
+                keyPressed("8");
+            }
+            else if (source.equals(sevenbutton)) {
+                keyPressed("7");
+            }
+            else if (source.equals(sixbutton)) {
+                keyPressed("6");
+            }
+            else if (source.equals(fivebutton)) {
+                keyPressed("5");
+            }
+            else if (source.equals(fourbutton)) {
+                keyPressed("4");
+            }
+            else if (source.equals(threebutton)) {
+                keyPressed("3");
+            }
+            else if (source.equals(twobutton)) {
+                keyPressed("2");
+            }
+            else if (source.equals(onebutton)) {
+                keyPressed("1");
+            }
+            else if (source.equals(zerobutton)) {
+                keyPressed("0");
+            }
+            else if (source.equals(addbutton)) {
+                keyPressed("+");
+            }
+            else if (source.equals(subtractbutton)) {
+                keyPressed("-");
+            }
+            else if (source.equals(multiplybutton)) {
+                keyPressed("x");
+            }
+            else if (source.equals(divbutton)) {
+                keyPressed("/");
+            }
+            else if (source.equals(cbutton)) {
+                keyPressed("c");
+            }
+            else if (source.equals(decimalbutton)) {
+                keyPressed(".");
+            }
+            else if (source.equals(pombutton)) {
+                keyPressed("pm");
+            }
+            else if (source.equals(modbutton)) {
+                keyPressed("p");
+            }
+            else if (source.equals(sqrtbutton)) {
+                keyPressed("sr");
+            }
+            else if (source.equals(powerbutton)) {
+                keyPressed("pw");
+            }
+            else if (source.equals(divxbutton)) {
+                keyPressed("dx");
+            }
+            else if (source.equals(equalbutton)) {
+                keyPressed("=");
+            }
+            else if (source.equals(backbutton)) {
+                keyPressed("b");
+            }			
+		}
+	};
+	
+	public void keyPressed(String num) {
+	
+		if (num == "9") {
+            if (operator) {
+                maindisp.setText("9");
+                operator = false;
+            }
+            else{
+                maindisp.setText(maindisp.getText()+"9");
+            }
+        }
+		else if (num == "8") {
+            if (operator) {
+                maindisp.setText("8");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"8");
+            }
+        }
+		else if (num == "7") {
+            if (operator) {
+            	maindisp.setText("7");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"7");
+            }        
+        }
+		else if (num == "6") {
+            if (operator) {
+            	maindisp.setText("6");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"6");
+            }        
+        }
+		else if (num == "6") {
+            if (operator) {
+            	maindisp.setText("6");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"6");
+            }        
+        }
+		else if (num == "5") {
+            if (operator) {
+            	maindisp.setText("5");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"5");
+            }        
+        }
+		else if (num == "4") {
+            if (operator) {
+            	maindisp.setText("4");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"4");
+            }        
+        }
+		else if (num == "3") {
+            if (operator) {
+            	maindisp.setText("3");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"3");
+            }        
+        }
+		else if (num == "2") {
+            if (operator) {
+            	maindisp.setText("2");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"2");
+            }        
+        }
+		else if (num == "1") {
+            if (operator) {
+            	maindisp.setText("1");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"1");
+            }        
+        }
+		else if (num == "0") {
+            if (operator) {
+            	maindisp.setText("0");
+                operator = false;
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+"0");
+            }        
+        }
+		else if (num == "+") {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"+");
+            value = maindisp.getText();
+            symbol = "+";
+            getValues(value, symbol);
+        }
+		else if (num == "-") {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"-");
+            value = maindisp.getText();
+            symbol = "-";
+            getValues(value, symbol);
+        }
+		else if (num == "x") {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"x");
+            value = maindisp.getText();
+            symbol = "x";
+            getValues(value, symbol);
+        }
+		else if (num == "/") {
+            operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"\u00F7");
+            value = maindisp.getText();
+            symbol = "/";
+            getValues(value, symbol);
+        }
+		else if (num=="c") {
+        	subdisp.setText("");
+            oldvaluef = newvaluef = result = 0;
+        	value = symbol = newvalue = "";
+        	  stack_1.clear();
+              stack_2.clear();
+              stack_3.clear();
+              stack_4.clear();
+            maindisp.setText("");
+    		maindisp.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+            lastoperator = "";
+        }
+		else if (num==".") {
+            if (operator) {
+            	maindisp.setText(".");
+            }
+            else{
+            	maindisp.setText(maindisp.getText()+".");
+            }
+        }
+		else if (num=="b") {
+        	maindisp.setText(maindisp.getText().substring(0, maindisp.getText().length()-1));
+        }
+		else if (num=="p") {
+        	operator = true;
+            subdisp.setText(subdisp.getText()+maindisp.getText()+"%");
+            oldvaluef = Float.parseFloat(maindisp.getText());
+            choice = 1;
+        }
+		else if (num=="pm") {
+        	if (subdisp.getText()=="") {
+				value = "0";
+				symbol = "-";
+				getValues(value, symbol);
+			}
+            subdisp.setText("0"+"-");
+        }
+        else if (num=="sr") {
+        	operator = true;
+            subdisp.setText("\u221A"+maindisp.getText());
+            double x = Double.parseDouble(maindisp.getText());
+            double result = Math.sqrt(x);
+            maindisp.setText(result+"");
+            subdisp.setText(" ");
+        }
+        else if (num=="pw") {
+            operator = true;
+            subdisp.setText(maindisp.getText()+"\u00B2");
+            double y = Double.parseDouble(maindisp.getText());
+            double result = Math.pow(y, 2);
+            maindisp.setText(result+"");
+            subdisp.setText(" ");
+        }
+        else if (num=="dx") {
+        	operator = true;
+            subdisp.setText("1"+"\u00F7"+maindisp.getText());
+            float oldvalue = Float.parseFloat(maindisp.getText());
+            Float result = 1/oldvalue;
+            maindisp.setText(result+"");
+            subdisp.setText(" ");
+        }
+        else if (num == "=") {
+        	
+            if (choice == 1) {
+                newvalue = maindisp.getText();
+                subdisp.setText(subdisp.getText()+newvalue);
+                newvaluef = Float.parseFloat(newvalue);
+                result = oldvaluef % newvaluef;
+                maindisp.setText(result+"");
+            }
+            
+            value = maindisp.getText();
+            symbol = "=";
+            getValues(value, symbol);
+
+            while (!stack_1.empty()) {
+                stack_2.push(stack_1.pop());
+                lastoperator = "=";
+            }
+
+            while (!stack_2.empty()){
+                nextinput = stack_2.pop();
+                inputvalue = stack_2.pop();
+                buttonHandler(inputvalue, nextinput);
+            }
+        }
+		
+	}
+	
 	//Accept input from buttons
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -714,7 +1172,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("1");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"1");
             }
         }
@@ -722,7 +1181,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("2");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"2");
             }
         }
@@ -730,7 +1190,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("3");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"3");
             }
         }
@@ -738,7 +1199,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("4");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"4");
             }
         }
@@ -746,7 +1208,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("5");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"5");
             }
         }
@@ -754,7 +1217,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("6");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"6");
             }
         }
@@ -762,7 +1226,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("7");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"7");
             }
         }
@@ -770,7 +1235,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("8");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"8");
             }
         }
@@ -778,7 +1244,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("9");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"9");
             }
         }
@@ -786,7 +1253,8 @@ public class Basic_Calculator implements ActionListener{
             if (operator) {
                 maindisp.setText("0");
                 operator = false;
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+"0");
             }
         }
@@ -840,14 +1308,16 @@ public class Basic_Calculator implements ActionListener{
 		else if (e.getSource()==backbutton) {
         	if (maindisp.getText()=="") {
                 subdisp.setText(subdisp.getText().substring(0, subdisp.getText().length()-1));
-			}else {
+			}
+        	else {
 	            maindisp.setText(maindisp.getText().substring(0, maindisp.getText().length()-1));
 			}
         }
 		else if (e.getSource()==decimalbutton) {
             if (operator) {
                 maindisp.setText(".");
-            }else{
+            }
+            else{
                 maindisp.setText(maindisp.getText()+".");
             }
         }
@@ -896,13 +1366,15 @@ public class Basic_Calculator implements ActionListener{
             frame.setState(JFrame.ICONIFIED);
         }
         else if (e.getSource() == equalbutton) {
-            if (choice == 1) {
+            
+        	if (choice == 1) {
                 newvalue = maindisp.getText();
                 subdisp.setText(subdisp.getText()+newvalue);
                 newvaluef = Float.parseFloat(newvalue);
                 result = oldvaluef % newvaluef;
                 maindisp.setText(result+"");
             }
+            
             value = maindisp.getText();
             symbol = "=";
             getValues(value, symbol);
@@ -944,7 +1416,8 @@ public class Basic_Calculator implements ActionListener{
                         float num2 = Float.parseFloat(nexInput);
                         float result = num1 * num2;
                         nexInput = Float.toString(result);
-                    } else if (stack_3.peek().equals("/")) {
+                    }
+                    else if (stack_3.peek().equals("/")) {
                     	stack_3.pop();
                         float num1 = Float.parseFloat(stack_3.pop());
                         float num2 = Float.parseFloat(nexInput);
@@ -981,26 +1454,31 @@ public class Basic_Calculator implements ActionListener{
                                 float num2 = Float.parseFloat(stack_4.pop());
                                 float result = num1 + num2;
                                 nexInput = Float.toString(result);
-                            }else if (stack_4.peek().equals("-")) {
+                            }
+                            else if (stack_4.peek().equals("-")) {
                                 stack_4.pop();
                                 float num1 = Float.parseFloat(firstNumber);
                                 float num2 = Float.parseFloat(stack_4.pop());
                                 float result = num1 - num2;
                                 nexInput = Float.toString(result);
-                            }if (!stack_4.empty()) {
+                            }
+                            if (!stack_4.empty()) {
                                 stack_4.push(nexInput);
-                            } else {
+                            }
+                            else {
                                 maindisp.setText(nexInput);
                             }
                         }
-                    }catch (Exception ex) {
+                    }
+                    catch (Exception ex) {
                     //System.out.println("something wrong in part 2");
                     maindisp.setText("Something went wrong");
                 }
             }
                 else if(choice == 1) {
                 	maindisp.setText("Cannot divided by zero");
-                }else {
+                }
+                else {
                     maindisp.setText(nexInput);
                 }
         }
