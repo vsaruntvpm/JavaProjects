@@ -46,7 +46,8 @@ public class Basic_Calculator implements ActionListener{
     Stack<String> stack_1 = new Stack<>();
     Stack<String> stack_2 = new Stack<>();
     Stack<String> stack_3 = new Stack<>();
-    Stack<String> stack_4 = new Stack<>();
+    Stack<String> stack_4 = new Stack<>();    
+    Stack<String> memstack = new Stack<>();
 	//---------------------------------------------------------------------------------------//
 
 	Basic_Calculator(){
@@ -114,6 +115,10 @@ public class Basic_Calculator implements ActionListener{
         memorysub.setOpaque(false);
         memorystore.setOpaque(false);
         memory.setOpaque(false);
+        
+        memoryclear.setEnabled(false);
+        memoryrecall.setEnabled(false);
+        memory.setEnabled(false);
         
         memoryclear.setBorderPainted(false);
         memoryrecall.setBorderPainted(false);
@@ -1389,6 +1394,43 @@ public class Basic_Calculator implements ActionListener{
                 inputvalue = stack_2.pop();
                 buttonHandler(inputvalue, nextinput);
             }
+        }
+        else if (e.getSource()==memorystore) {
+        	if (maindisp.getText() != "") {
+                memoryclear.setEnabled(true);
+                memoryrecall.setEnabled(true);
+                memory.setEnabled(true);        		
+    			memstack.push(maindisp.getText());
+			}
+		}
+        else if (e.getSource()==memoryrecall) {
+        	if (memstack.peek() != "") {
+    			maindisp.setText(memstack.peek());
+			}
+		}
+        else if (e.getSource()==memoryclear) {
+        	memstack.clear();
+            memoryclear.setEnabled(false);
+            memoryrecall.setEnabled(false);
+            memory.setEnabled(false);		
+        }
+        else if (e.getSource()==memoryadd) {
+        	if (maindisp.getText() != "") {
+    			float num1 = Float.parseFloat(memstack.peek());
+    			float num2 = Float.parseFloat(maindisp.getText());
+    			float out = num1 + num2;
+    			memstack.push(out+"");
+        	}
+        }else if (e.getSource()==memorysub) {
+        	if (maindisp.getText() != "") {
+    			float num1 = Float.parseFloat(memstack.peek());
+    			float num2 = Float.parseFloat(maindisp.getText());
+    			float out = num1 - num2;
+        	}
+        }else if (e.getSource()==memory) {
+        	if (!memstack.peek().isEmpty()) {
+            	maindisp.setText(memstack.pop());
+			}
         }
 	}
 
